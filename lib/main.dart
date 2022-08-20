@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/widgets.dart';
-import 'package:language_translator/bottomPopup.dart';
+import 'package:language_translator/apiCalls/get_languages.dart';
+import 'package:language_translator/bottom_popup.dart';
+import 'package:flutter_localized_locales/flutter_localized_locales.dart';
 
 void main() {
   runApp(const MyApp());
@@ -19,6 +21,10 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.green,
       ),
       darkTheme: ThemeData.dark(),
+      localizationsDelegates: [
+        LocaleNamesLocalizationsDelegate(),
+        // ... more localization delegates
+      ],
       home: const HomeScreen(),
     );
   }
@@ -68,7 +74,7 @@ class HomeScreen extends StatelessWidget {
           children: [
             Row(
               children: [
-                Text('Translate From', style: TextStyle(color: Colors.grey),),
+                Text('Translate To', style: TextStyle(color: Colors.grey),),
                 Text('(German)'),
               ],
             ),
@@ -117,7 +123,7 @@ class HomeScreen extends StatelessWidget {
             showModalBottomSheet<void>(
             context: context,
             builder: (BuildContext context) {
-              return BottomPopup();
+              return BottomPopup(current : 'From');
             });
           },
         ),
@@ -133,11 +139,15 @@ class HomeScreen extends StatelessWidget {
               ),
             ),
           ),
-          onTap: (){
+          onTap: () {
+            // print(LocaleNames.of(context)!.nameOf('zh').toString());
+            // var lang = getLanguages();
+            
             showModalBottomSheet<void>(
             context: context,
             builder: (BuildContext context) {
-              return BottomPopup();
+              
+              return BottomPopup(current: 'To');
             });
           },
         ),
