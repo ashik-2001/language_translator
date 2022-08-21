@@ -15,7 +15,9 @@ class BottomPopup extends StatefulWidget {
 }
 
 class _BottomPopupState extends State<BottomPopup> {
-  late List lang = [{'language': 'loading...'}];
+  late List lang = [
+    {'language': 'loading...'}
+  ];
 
   @override
   initState() {
@@ -24,7 +26,7 @@ class _BottomPopupState extends State<BottomPopup> {
     // Add listeners to this class
   }
 
-  void setToLang() async{
+  void setToLang() async {
     List languages = await getLanguages();
     setState(() {
       lang = languages;
@@ -59,15 +61,22 @@ class _BottomPopupState extends State<BottomPopup> {
               padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
               child: ListView.separated(
                   itemBuilder: (BuildContext context, int index) {
-                    if (LocaleNames.of(context)!.nameOf('${lang[index]['language']}').toString() == 'null'){
+                    if (LocaleNames.of(context)!
+                            .nameOf('${lang[index]['language']}')
+                            .toString() ==
+                        'null') {
                       return _listLanguages('${lang[index]['language']}');
                       // return Text('${lang[index]['language']}');
                     }
-                      return _listLanguages(LocaleNames.of(context)!.nameOf('${lang[index]['language']}').toString());
+                    return _listLanguages(LocaleNames.of(context)!
+                        .nameOf('${lang[index]['language']}')
+                        .toString());
                     // return Text(LocaleNames.of(context)!.nameOf('${lang[index]['language']}').toString());
                   },
                   separatorBuilder: (BuildContext context, int index) =>
-                      const SizedBox(height: 10,),
+                      const SizedBox(
+                        height: 10,
+                      ),
                   itemCount: lang.length),
             ))
           ],
@@ -80,9 +89,15 @@ class _BottomPopupState extends State<BottomPopup> {
     return ListTile(
       title: Text(value),
       tileColor: Colors.black,
-      onTap: (){
-        print(value);
-        Provider.of<ChangeLanguage>(context, listen: false).changeFlanguage(value);
+      onTap: () {
+        print(widget.current);
+        if (widget.current == 'From') {
+          Provider.of<ChangeLanguage>(context, listen: false)
+              .changeFlanguage(value);
+        } else {
+          Provider.of<ChangeLanguage>(context, listen: false)
+              .changeTlanguage(value);
+        }
       },
     );
   }

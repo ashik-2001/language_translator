@@ -12,7 +12,4 @@ class ChangeLanguage extends ChangeNotifier {
     fromLanguage = lang;
     notifyListeners();
   }
-
-
-  
 }
