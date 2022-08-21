@@ -3,7 +3,8 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localized_locales/flutter_localized_locales.dart';
 import 'package:language_translator/apiCalls/get_languages.dart';
-import 'package:language_translator/logic/list_languages.dart';
+import 'package:language_translator/logic/logics.dart';
+import 'package:provider/provider.dart';
 
 class BottomPopup extends StatefulWidget {
   final current;
@@ -59,17 +60,30 @@ class _BottomPopupState extends State<BottomPopup> {
               child: ListView.separated(
                   itemBuilder: (BuildContext context, int index) {
                     if (LocaleNames.of(context)!.nameOf('${lang[index]['language']}').toString() == 'null'){
-                      return Text('${lang[index]['language']}');
+                      return _listLanguages('${lang[index]['language']}');
+                      // return Text('${lang[index]['language']}');
                     }
-                    return Text(LocaleNames.of(context)!.nameOf('${lang[index]['language']}').toString());
+                      return _listLanguages(LocaleNames.of(context)!.nameOf('${lang[index]['language']}').toString());
+                    // return Text(LocaleNames.of(context)!.nameOf('${lang[index]['language']}').toString());
                   },
                   separatorBuilder: (BuildContext context, int index) =>
-                      const Divider(),
+                      const SizedBox(height: 10,),
                   itemCount: lang.length),
             ))
           ],
         ),
       ),
+    );
+  }
+
+  Widget _listLanguages(value) {
+    return ListTile(
+      title: Text(value),
+      tileColor: Colors.black,
+      onTap: (){
+        print(value);
+        Provider.of<ChangeLanguage>(context, listen: false).changeFlanguage(value);
+      },
     );
   }
 }

@@ -3,6 +3,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/widgets.dart';
 import 'package:language_translator/apiCalls/get_languages.dart';
 import 'package:language_translator/bottom_popup.dart';
+import 'package:language_translator/logic/logics.dart';
+import 'package:provider/provider.dart';
 import 'package:flutter_localized_locales/flutter_localized_locales.dart';
 
 void main() {
@@ -14,24 +16,40 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Adaptive Music App',
-      theme: ThemeData(
-        // Use the green theme for Material widgets.
-        primarySwatch: Colors.green,
-      ),
-      darkTheme: ThemeData.dark(),
-      localizationsDelegates: [
-        LocaleNamesLocalizationsDelegate(),
-        // ... more localization delegates
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (context) => ChangeLanguage(),
+        )
       ],
-      home: const HomeScreen(),
+      child: MaterialApp(
+        title: 'Adaptive Music App',
+        theme: ThemeData(
+          // Use the green theme for Material widgets.
+          primarySwatch: Colors.green,
+        ),
+        darkTheme: ThemeData.dark(),
+        localizationsDelegates: [
+          LocaleNamesLocalizationsDelegate(),
+          // ... more localization delegates
+        ],
+        home: const HomeScreen(),
+      ),
     );
   }
 }
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  String fromLang = 'Select Lang';
+  String toLang = 'Select Lang';
+
 
   @override
   Widget build(BuildContext context) {
@@ -64,7 +82,7 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  Widget _translateTo(){
+  Widget _translateTo() {
     return Padding(
       padding: const EdgeInsets.fromLTRB(0, 15, 0, 0),
       child: Container(
@@ -74,7 +92,10 @@ class HomeScreen extends StatelessWidget {
           children: [
             Row(
               children: [
-                Text('Translate To', style: TextStyle(color: Colors.grey),),
+                Text(
+                  'Translate To',
+                  style: TextStyle(color: Colors.grey),
+                ),
                 Text('(German)'),
               ],
             ),
@@ -95,7 +116,10 @@ class HomeScreen extends StatelessWidget {
           children: [
             Row(
               children: [
-                Text('Translate From', style: TextStyle(color: Colors.grey),),
+                Text(
+                  'Translate From',
+                  style: TextStyle(color: Colors.grey),
+                ),
                 Text('(German)'),
               ],
             ),
@@ -107,6 +131,9 @@ class HomeScreen extends StatelessWidget {
   }
 
   Widget _languageSelectors(context) {
+    var fromLanguage = Provider.of<ChangeLanguage>(context).fromLanguage;
+    var toLanguage = Provider.of<ChangeLanguage>(context).toLanguage;
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -114,41 +141,36 @@ class HomeScreen extends StatelessWidget {
           child: Card(
             child: Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Row(
-                children: [Text('Germany')],
-              ),
+              child: Text(fromLanguage),
             ),
           ),
-          onTap: (){
+          onTap: () {
             showModalBottomSheet<void>(
-            context: context,
-            builder: (BuildContext context) {
-              return BottomPopup(current : 'From');
-            });
+                context: context,
+                builder: (BuildContext context) {
+                  return BottomPopup(current: 'From');
+                });
           },
         ),
-        IconButton(onPressed: () {
-          
-        }, icon: Icon(Icons.compare_arrows)),
+        IconButton(onPressed: () {}, icon: Icon(Icons.compare_arrows)),
         InkWell(
           child: Card(
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Row(
-                children: [Text('Germany')],
+                children: [Text(toLang)],
               ),
             ),
           ),
           onTap: () {
             // print(LocaleNames.of(context)!.nameOf('zh').toString());
             // var lang = getLanguages();
-            
+
             showModalBottomSheet<void>(
-            context: context,
-            builder: (BuildContext context) {
-              
-              return BottomPopup(current: 'To');
-            });
+                context: context,
+                builder: (BuildContext context) {
+                  return BottomPopup(current: 'To');
+                });
           },
         ),
       ],
