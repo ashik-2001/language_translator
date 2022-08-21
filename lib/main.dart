@@ -47,8 +47,8 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  String fromLang = 'Select Lang';
-  String toLang = 'Select Lang';
+  var fromLanguage;
+  var toLanguage;
 
 
   @override
@@ -96,7 +96,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   'Translate To',
                   style: TextStyle(color: Colors.grey),
                 ),
-                Text('(German)'),
+                Text('($toLanguage)'),
               ],
             ),
             TextField(),
@@ -120,7 +120,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   'Translate From',
                   style: TextStyle(color: Colors.grey),
                 ),
-                Text('(German)'),
+                Text('($fromLanguage)'),
               ],
             ),
             TextField(),
@@ -131,8 +131,8 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _languageSelectors(context) {
-    var fromLanguage = Provider.of<ChangeLanguage>(context).fromLanguage;
-    var toLanguage = Provider.of<ChangeLanguage>(context).toLanguage;
+    fromLanguage = Provider.of<ChangeLanguage>(context).fromLanguage;
+    toLanguage = Provider.of<ChangeLanguage>(context).toLanguage;
     var temp;
 
     return Row(
