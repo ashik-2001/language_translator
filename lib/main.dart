@@ -133,6 +133,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget _languageSelectors(context) {
     var fromLanguage = Provider.of<ChangeLanguage>(context).fromLanguage;
     var toLanguage = Provider.of<ChangeLanguage>(context).toLanguage;
+    var temp;
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -152,7 +153,13 @@ class _HomeScreenState extends State<HomeScreen> {
                 });
           },
         ),
-        IconButton(onPressed: () {}, icon: Icon(Icons.compare_arrows)),
+        IconButton(onPressed: () {
+          temp = fromLanguage;
+          Provider.of<ChangeLanguage>(context, listen: false)
+              .changeFlanguage(toLanguage);
+          Provider.of<ChangeLanguage>(context, listen: false).changeTlanguage(temp);
+          
+        }, icon: Icon(Icons.compare_arrows)),
         InkWell(
           child: Card(
             child: Padding(
