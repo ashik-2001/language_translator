@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:flutter/widgets.dart';
-import 'package:language_translator/apiCalls/get_languages.dart';
 import 'package:language_translator/bottom_popup.dart';
 import 'package:language_translator/logic/logics.dart';
 import 'package:provider/provider.dart';
@@ -49,7 +47,20 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   var fromLanguage;
   var toLanguage;
+  final fromLanguageController = TextEditingController();
+  final toLanguageController = TextEditingController();
 
+  @override
+  void initState() {
+    super.initState();
+    fromLanguageController.addListener(_fromLanguageValue);
+  }
+
+  @override
+  void dispose() {
+    fromLanguageController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -82,30 +93,6 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget _translateTo() {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(0, 15, 0, 0),
-      child: Container(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                Text(
-                  'Translate To',
-                  style: TextStyle(color: Colors.grey),
-                ),
-                Text('($toLanguage)'),
-              ],
-            ),
-            TextField(),
-          ],
-        ),
-      ),
-    );
-  }
-
   Widget _translateFrom() {
     return Padding(
       padding: const EdgeInsets.fromLTRB(0, 15, 0, 0),
@@ -116,14 +103,50 @@ class _HomeScreenState extends State<HomeScreen> {
           children: [
             Row(
               children: [
-                Text(
+                const Text(
                   'Translate From',
                   style: TextStyle(color: Colors.grey),
                 ),
                 Text('($fromLanguage)'),
               ],
             ),
-            TextField(),
+            TextField(
+              controller: fromLanguageController,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  void _fromLanguageValue() {
+    print(fromLanguageController.text);
+
+    toLanguageController.text = fromLanguageController.text;
+
+    print(toLanguageController.text);
+  }
+
+  Widget _translateTo() {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(0, 15, 0, 0),
+      child: Container(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                const Text(
+                  'Translate To',
+                  style: TextStyle(color: Colors.grey),
+                ),
+                Text('($toLanguage)'),
+              ],
+            ),
+            TextField(
+              controller: toLanguageController,
+            ),
           ],
         ),
       ),
@@ -153,13 +176,15 @@ class _HomeScreenState extends State<HomeScreen> {
                 });
           },
         ),
-        IconButton(onPressed: () {
-          temp = fromLanguage;
-          Provider.of<ChangeLanguage>(context, listen: false)
-              .changeFlanguage(toLanguage);
-          Provider.of<ChangeLanguage>(context, listen: false).changeTlanguage(temp);
-          
-        }, icon: Icon(Icons.compare_arrows)),
+        IconButton(
+            onPressed: () {
+              temp = fromLanguage;
+              Provider.of<ChangeLanguage>(context, listen: false)
+                  .changeFlanguage(toLanguage);
+              Provider.of<ChangeLanguage>(context, listen: false)
+                  .changeTlanguage(temp);
+            },
+            icon: Icon(Icons.compare_arrows)),
         InkWell(
           child: Card(
             child: Padding(
