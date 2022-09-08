@@ -120,11 +120,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   void _fromLanguageValue() {
-    print(fromLanguageController.text);
-
     toLanguageController.text = fromLanguageController.text;
-
-    print(toLanguageController.text);
   }
 
   Widget _translateTo() {
