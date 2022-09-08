@@ -8,7 +8,7 @@ Future getLanguages() async {
       .get(Uri.parse('https://google-translate1.p.rapidapi.com/language/translate/v2/languages'),
       headers: {
       'Accept-Encoding': 'application/gzip',
-      'X-RapidAPI-Key': '04c3c53805mshe5ba099bc8c0107p1da850jsnaacea637bbac',
+      'X-RapidAPI-Key': '3d03be530fmsh9517829b0de476ap1fe67bjsnd878b0f87596',
       'X-RapidAPI-Host': 'google-translate1.p.rapidapi.com',
   },
       );

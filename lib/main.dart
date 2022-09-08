@@ -125,7 +125,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Future _fromLanguageValue() async {
     // toLanguageController.text = fromLanguageController.text;
     PostLanguage postLan = PostLanguage();
-    postLan.createSentLanguage('translation');
+    toLanguageController.text = await postLan.createSentLanguage(fromLanguageController.text.toString());
   }
 
 

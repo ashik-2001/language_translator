@@ -11,16 +11,17 @@ class PostLanguage {
       data: {
         'source': 'en',
         'target': 'ml',
-        'q': 'hello world',
+        'q': translation,
       },
       options: Options(method: 'POST', headers: {
         "content-type": "application/x-www-form-urlencoded",
         "Accept-Encoding": "application/gzip",
-        "X-RapidAPI-Key": "04c3c53805mshe5ba099bc8c0107p1da850jsnaacea637bbac",
+        "X-RapidAPI-Key": "3d03be530fmsh9517829b0de476ap1fe67bjsnd878b0f87596", //account is reviewer zephyr in rapid api
         "X-RapidAPI-Host": "google-translate1.p.rapidapi.com",
       }),
     );
-    print(response);
+    var data = (response.data['data']['translations'][0]['translatedText']);
+    return(data.toString());
   }
 }
 
@@ -32,7 +33,7 @@ class PostLanguage {
 //   static const Map<String, String> _headers = {
 //     "content-type": "application/x-www-form-urlencoded",
 //     "Accept-Encoding": "application/gzip",
-//     "X-RapidAPI-Key": "04c3c53805mshe5ba099bc8c0107p1da850jsnaacea637bbac",
+//     "X-RapidAPI-Key": "3d03be530fmsh9517829b0de476ap1fe67bjsnd878b0f87596",
 //     "X-RapidAPI-Host": "google-translate1.p.rapidapi.com",
 //   };
 
@@ -40,12 +41,12 @@ class PostLanguage {
 //     final response = await http.post(
 //       Uri.parse(
 //           'https://google-translate1.p.rapidapi.com/language/translate/v2'),
-//        headers: _headers,//{
-//       //   'content-type':'application/x-www-form-urlencoded',
-//       //   'Accept-Encoding': 'application/gzip',
-//       //   'X-RapidAPI-Key': '04c3c53805mshe5ba099bc8c0107p1da850jsnaacea637bbac',
-//       //   'X-RapidAPI-Host': 'google-translate1.p.rapidapi.com',
-//       // },
+//       headers: {
+//         'content-type': 'application/x-www-form-urlencoded',
+//         'Accept-Encoding': 'application/gzip',
+//         'X-RapidAPI-Key': '3d03be530fmsh9517829b0de476ap1fe67bjsnd878b0f87596',
+//         'X-RapidAPI-Host': 'google-translate1.p.rapidapi.com',
+//       },
 //       encoding: Encoding.getByName('utf-8'),
 //       body: {
 //         'source': 'en',
@@ -67,6 +68,12 @@ class PostLanguage {
 //     }
 //   }
 // }
+
+
+
+
+
+
 
 
 
