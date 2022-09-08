@@ -4,6 +4,7 @@ import 'package:language_translator/bottom_popup.dart';
 import 'package:language_translator/logic/logics.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_localized_locales/flutter_localized_locales.dart';
+import 'package:language_translator/apiCalls/post_languages.dart';
 
 void main() {
   runApp(const MyApp());
@@ -49,6 +50,8 @@ class _HomeScreenState extends State<HomeScreen> {
   var toLanguage;
   final fromLanguageController = TextEditingController();
   final toLanguageController = TextEditingController();
+  // Future<SentLanguage>? _futureSentLanguage;
+
 
   @override
   void initState() {
@@ -119,9 +122,12 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  void _fromLanguageValue() {
-    toLanguageController.text = fromLanguageController.text;
+  Future _fromLanguageValue() async {
+    // toLanguageController.text = fromLanguageController.text;
+    PostLanguage postLan = PostLanguage();
+    postLan.createSentLanguage('translation');
   }
+
 
   Widget _translateTo() {
     return Padding(
