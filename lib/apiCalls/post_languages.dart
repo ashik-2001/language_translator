@@ -4,13 +4,14 @@ import 'package:http/http.dart' as http;
 import 'package:dio/dio.dart';
 
 class PostLanguage {
-  Future createSentLanguage(String translation) async {
+  Future createSentLanguage(String translation, String source, String target) async {
+    // print("$source, $target");
     var dio = Dio();
     final response = await dio.request(
       'https://google-translate1.p.rapidapi.com/language/translate/v2',
       data: {
-        'source': 'en',
-        'target': 'ml',
+        'source': source,
+        'target': target,
         'q': translation,
       },
       options: Options(method: 'POST', headers: {

@@ -66,12 +66,12 @@ class _BottomPopupState extends State<BottomPopup> {
                             .nameOf('${lang[index]['language']}')
                             .toString() ==
                         'null') {
-                      return _listLanguages('${lang[index]['language']}');
+                      return _listLanguages('${lang[index]['language']}', index);
                       // return Text('${lang[index]['language']}');
                     }
                     return _listLanguages(LocaleNames.of(context)!
                         .nameOf('${lang[index]['language']}')
-                        .toString());
+                        .toString(), index);
                     // return Text(LocaleNames.of(context)!.nameOf('${lang[index]['language']}').toString());
                   },
                   separatorBuilder: (BuildContext context, int index) =>
@@ -86,7 +86,7 @@ class _BottomPopupState extends State<BottomPopup> {
     );
   }
 
-  Widget _listLanguages(value) {
+  Widget _listLanguages(value,index) {
     return ListTile(
       title: Text(value),
       tileColor: Colors.black,
@@ -95,9 +95,13 @@ class _BottomPopupState extends State<BottomPopup> {
         if (widget.current == 'From') {
           Provider.of<ChangeLanguage>(context, listen: false)
               .changeFlanguage(value);
+          Provider.of<ChangePostLanguage>(context, listen: false)
+              .changeSourcelanguage(lang[index]['language']);
         } else {
           Provider.of<ChangeLanguage>(context, listen: false)
               .changeTlanguage(value);
+          Provider.of<ChangePostLanguage>(context, listen: false)
+              .changeTargetlanguage(lang[index]['language']);
         }
       },
     );

@@ -16,16 +16,16 @@ class ChangeLanguage extends ChangeNotifier {
   }
 }
 
-// class ChangePostLanguage extends ChangeNotifier {
-//   var toLanguage, fromLanguage;
-//   ChangePostLanguage({this.toLanguage = 'Select lang',this.fromLanguage = 'Select lang'});
+class ChangePostLanguage extends ChangeNotifier {
+  var targetLanguage, sourceLanguage;
+  ChangePostLanguage({this.targetLanguage = 'Select lang',this.sourceLanguage = 'Select lang'});
 
-//   void changeTlanguage(lang){
-//     toLanguage = lang;
-//     notifyListeners();
-//   }
-//   void changeFlanguage(lang){
-//     fromLanguage = lang;
-//     notifyListeners();
-//   }
-// }
+  void changeTargetlanguage(lang){
+    targetLanguage = lang;
+    notifyListeners();
+  }
+  void changeSourcelanguage(lang){
+    sourceLanguage = lang;
+    notifyListeners();
+  }
+}

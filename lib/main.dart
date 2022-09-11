@@ -19,6 +19,9 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(
           create: (context) => ChangeLanguage(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => ChangePostLanguage(),
         )
       ],
       child: MaterialApp(
@@ -124,8 +127,10 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Future _fromLanguageValue() async {
     // toLanguageController.text = fromLanguageController.text;
+    var source = Provider.of<ChangePostLanguage>(context,listen: false).sourceLanguage;
+    var target = Provider.of<ChangePostLanguage>(context,listen: false).targetLanguage;
     PostLanguage postLan = PostLanguage();
-    toLanguageController.text = await postLan.createSentLanguage(fromLanguageController.text.toString());
+    toLanguageController.text = await postLan.createSentLanguage(fromLanguageController.text.toString(), source, target);
   }
 
 
